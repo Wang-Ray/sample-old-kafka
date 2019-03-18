@@ -22,7 +22,7 @@ public class kafkaProducer extends Thread {
         Producer producer = createProducer();
         int i = 0;
         while (true) {
-            producer.send(new KeyedMessage<Integer, String>(topic, "message: " + i++));
+            producer.send(new KeyedMessage<Integer, String>(topic, "message-" + i++));
             try {
                 TimeUnit.SECONDS.sleep(1);
             } catch (InterruptedException e) {
