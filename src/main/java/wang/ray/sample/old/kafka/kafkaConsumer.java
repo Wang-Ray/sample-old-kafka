@@ -1,15 +1,15 @@
 package wang.ray.sample.old.kafka;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-
 import kafka.consumer.Consumer;
 import kafka.consumer.ConsumerConfig;
 import kafka.consumer.ConsumerIterator;
 import kafka.consumer.KafkaStream;
 import kafka.javaapi.consumer.ConsumerConnector;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 public class kafkaConsumer extends Thread {
 
@@ -24,9 +24,9 @@ public class kafkaConsumer extends Thread {
     public void run() {
         ConsumerConnector consumer = createConsumer();
         Map<String, Integer> topicCountMap = new HashMap<>();
-        topicCountMap.put(topic, 1); // 一次从主题中获取一个数据
+        topicCountMap.put(topic, 1);
         Map<String, List<KafkaStream<byte[], byte[]>>> messageStreams = consumer.createMessageStreams(topicCountMap);
-        KafkaStream<byte[], byte[]> stream = messageStreams.get(topic).get(0);// 获取每次接收到的这个数据
+        KafkaStream<byte[], byte[]> stream = messageStreams.get(topic).get(0);
         ConsumerIterator<byte[], byte[]> iterator = stream.iterator();
         while (iterator.hasNext()) {
             String message = new String(iterator.next().message());
@@ -36,7 +36,7 @@ public class kafkaConsumer extends Thread {
 
     private ConsumerConnector createConsumer() {
         Properties properties = new Properties();
-        properties.put("zookeeper.connect", "localhost:2181");//声明zk
+        properties.put("zookeeper.connect", "localhost:2181");
         properties.put("group.id", "group1");
         return Consumer.createJavaConsumerConnector(new ConsumerConfig(properties));
     }
