@@ -34,6 +34,7 @@ public class kafkaConsumer extends Thread {
         List<KafkaStream<byte[], byte[]>> streams = messageStreams.get(topic);
 
         int threadNumber = 0;
+        // 为每个stream启动一个线程消费消息
         ExecutorService executor = Executors.newFixedThreadPool(threadCount);
         for (final KafkaStream stream : streams) {
             executor.submit(new ConsumerWork(stream, threadNumber++));
