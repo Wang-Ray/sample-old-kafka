@@ -13,6 +13,11 @@ import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * 旧版kafka java client consumer
+ *
+ * @author ray
+ */
 public class kafkaConsumer extends Thread {
 
     private String topic;
@@ -27,7 +32,7 @@ public class kafkaConsumer extends Thread {
     @Override
     public void run() {
         ConsumerConnector consumer = createConsumer();
-        Map<String, Integer> topicCountMap = new HashMap<>();
+        Map<String, Integer> topicCountMap = new HashMap<>(1);
         // 消费线程数，小于或等于分区数
         topicCountMap.put(topic, threadCount);
         Map<String, List<KafkaStream<byte[], byte[]>>> messageStreams = consumer.createMessageStreams(topicCountMap);
@@ -68,6 +73,6 @@ public class kafkaConsumer extends Thread {
     }
 
     public static void main(String[] args) {
-        new kafkaConsumer("test", 1).start();// 使用kafka集群中创建好的主题 test
+        new kafkaConsumer("test", 1).start();
     }
 }

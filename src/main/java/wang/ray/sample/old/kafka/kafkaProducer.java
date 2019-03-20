@@ -1,13 +1,19 @@
 package wang.ray.sample.old.kafka;
 
-import java.util.Properties;
-import java.util.concurrent.TimeUnit;
-
 import kafka.javaapi.producer.Producer;
 import kafka.producer.KeyedMessage;
 import kafka.producer.ProducerConfig;
 import kafka.serializer.StringEncoder;
+import lombok.extern.slf4j.Slf4j;
 
+import java.util.Properties;
+import java.util.concurrent.TimeUnit;
+
+/**
+ * 旧版kafka java client producer
+ *
+ * @author ray
+ */
 public class kafkaProducer extends Thread {
 
     private String topic;
@@ -22,7 +28,9 @@ public class kafkaProducer extends Thread {
         Producer producer = createProducer();
         int i = 0;
         while (true) {
-            producer.send(new KeyedMessage<Integer, String>(topic, "message-" + i++));
+            String message = "message-" + i++;
+            producer.send(new KeyedMessage<Integer, String>(topic, message));
+            System.out.println("producer message: " + message);
             try {
                 TimeUnit.SECONDS.sleep(1);
             } catch (InterruptedException e) {
@@ -39,10 +47,7 @@ public class kafkaProducer extends Thread {
         return new Producer<Integer, String>(new ProducerConfig(properties));
     }
 
-
     public static void main(String[] args) {
-        new kafkaProducer("test").start();// 使用kafka集群中创建好的主题 test
-
+        new kafkaProducer("test").start();
     }
-
 }
