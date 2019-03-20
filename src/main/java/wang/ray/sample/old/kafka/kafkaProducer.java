@@ -41,8 +41,7 @@ public class kafkaProducer extends Thread {
 
     private Producer createProducer() {
         Properties properties = new Properties();
-        properties.put("zookeeper.connect", "localhost:2181");
-        properties.put("metadata.broker.list", "localhost:9092");
+        properties.put("metadata.broker.list", "localhost:9092,localhost:9093,localhost:9094");
         properties.put("serializer.class", StringEncoder.class.getName());
         return new Producer<Integer, String>(new ProducerConfig(properties));
     }
