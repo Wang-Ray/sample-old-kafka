@@ -67,12 +67,16 @@ public class kafkaConsumer extends Thread {
 
     private ConsumerConnector createConsumer() {
         Properties properties = new Properties();
-        properties.put("zookeeper.connect", "localhost:2181");
-        properties.put("group.id", "group1");
+        properties.put("zookeeper.connect", "10.177.84.73:2181/mqcluster0");
+//        properties.put("zookeeper.connect", "10.177.84.76:2181/mqcluster0");
+//        properties.put("zookeeper.connect", "10.7.111.170:2181/mqcluster0");
+        properties.put("group.id", "lkl_zf_bs_lama_dc");
         return Consumer.createJavaConsumerConnector(new ConsumerConfig(properties));
     }
 
     public static void main(String[] args) {
-        new kafkaConsumer("test", 1).start();
+//        new kafkaConsumer("lkl_zf-lamm-dc_events", 1).start();
+        new kafkaConsumer("lkl_zf-lama-mposmember_events", 1).start();
+//        new kafkaConsumer("pospmtest", 1).start();
     }
 }
